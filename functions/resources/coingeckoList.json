@@ -1,0 +1,17 @@
+{
+    "IRON": {
+        "id": "iron-stablecoin"
+    },
+    "TITAN": {
+        "id": "iron-titanium-token"
+    },
+    "BUNNY": {
+        "id": "pancake-bunny"
+    },
+    "DOPPLE": {
+        "id": "dopple-finance"
+    },
+    "BANANA": {
+        "id": "apeswap-finance"
+    }
+}

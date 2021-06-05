@@ -1,0 +1,32 @@
+{
+    "BTC": {
+        "symbol": "BTCUSDT"
+    },
+    "BNB": {
+        "symbol": "BNBUSDT"
+    },
+    "ETH": {
+        "symbol": "ETHUSDT"
+    },
+    "ADA": {
+        "symbol": "ADAUSDT"
+    },
+    "DOGE": {
+        "symbol": "DOGEUSDT"
+    },
+    "XRP": {
+        "symbol": "XRPUSDT"
+    },
+    "DOT": {
+        "symbol": "DOTUSDT"
+    },
+    "MATIC": {
+        "symbol": "MATICUSDT"
+    },
+    "THETA": {
+        "symbol": "THETAUSDT"
+    },
+    "CAKE": {
+        "symbol": "CAKEUSDT"
+    }
+}
