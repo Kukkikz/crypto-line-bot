@@ -2,13 +2,9 @@ const axios = require('axios');
 const binanceUrl = 'https://api.binance.com/api/v3';
 const coingeckoUrl = 'https://api.coingecko.com/api/v3';
 const coingeckoList = require('../resources/coingeckoList.json');
-const testToken = {
-    "symbol": "XXXUSDT"
-}
 
 const getPriceFromBinance = async (token) => {
     const response = {};
-    // const symbol = token.symbol;
     const symbol = token;
     try {
         const res = await axios.get(`${binanceUrl}/ticker/24hr?symbol=${symbol}USDT`);
@@ -35,7 +31,6 @@ const getPriceFromCoingecko = async (token) => {
         response.priceChange = res.data.market_data.price_change_percentage_24h;
         response.lowPrice = res.data.market_data.low_24h.usd;
         response.highPrice = res.data.market_data.high_24h.usd;
-        console.log(response);
         return response;
     } catch (error) {
         response.success = false;
@@ -48,10 +43,16 @@ const isInCoingecko = (token) => {
     return coingeckoList[token] !== undefined;
 }
 
+const getPrice = async (token) => {
+    if (isInCoingecko(token)) return await getPriceFromCoingecko(token);
+    return await getPriceFromBinance(token);
+}
+
 
 
 module.exports = {
     getPriceFromBinance,
     getPriceFromCoingecko,
-    isInCoingecko
+    isInCoingecko,
+    getPrice
 }
