@@ -8,7 +8,7 @@ const isValidInput = (msgObj) => {
 }
 
 const getCommand = (msg) => {
-    return msg.substring(1).toUpperCase();
+    return msg.trim().substring(1).toUpperCase();
 }
 
 module.exports = {

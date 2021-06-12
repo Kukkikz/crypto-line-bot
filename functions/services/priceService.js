@@ -1,7 +1,10 @@
 const axios = require('axios');
+const coingeckoList = require('../resources/coingeckoList.json');
+const utilService = require('./utilService');
+
+const thTimeOffset = 7;
 const binanceUrl = 'https://api.binance.com/api/v3';
 const coingeckoUrl = 'https://api.coingecko.com/api/v3';
-const coingeckoList = require('../resources/coingeckoList.json');
 
 const getPriceFromBinance = async (token) => {
     const response = {};
@@ -48,11 +51,41 @@ const getPrice = async (token) => {
     return await getPriceFromBinance(token);
 }
 
+const getChartDataSet = async (token) => {
+    const response = {};
+    const symbol = token;
+    try {
+        const res = await axios.get(`${binanceUrl}/klines?symbol=${symbol}USDT&interval=1h&limit=24`);
+        response.success = true;
+        response.timeLabels = [];
+        response.priceDataSet = [];
+
+        const dataSet = res.data;
+        for (const [index, data] of dataSet.entries()) {
+            console.log(index, data);
+
+            response.timeLabels[index] = utilService.eprochToString(data[0], thTimeOffset);
+            response.priceDataSet[index] = parseFloat(data[1]);
+        }
+        response.timeLabels[dataSet.length] = utilService.getCurrentDate(thTimeOffset);
+        response.priceDataSet[dataSet.length] = parseFloat(dataSet[dataSet.length - 1][4]);
+
+        response.chartLabel = `${token} price = $${response.priceDataSet[dataSet.length]}`;
+        response.dataLabel = `${token} price from ${response.timeLabels[0]} to ${response.timeLabels[response.timeLabels.length - 1]}`
+
+        return response;
+    } catch (error) {
+        response.success = false;
+        return response;
+    }
+}
+
 
 
 module.exports = {
     getPriceFromBinance,
     getPriceFromCoingecko,
     isInCoingecko,
-    getPrice
+    getPrice,
+    getChartDataSet
 }
